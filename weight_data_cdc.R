@@ -2,11 +2,6 @@
 # Behaviorial Risk Factor annual survey data:http://www.cdc.gov/brfss/annual_data/annual_data.htm
 # BRFSS general information: http://www.cdc.gov/brfss/data_documentation/index.htm 
 
-# US Obesity Across Time
-# 
-# The Centers for Disease Control and Prevention conduct an annual survey as part of the Behavioral Risk Factor Surveillance System. While the CDC does make the data available (in ASCII and SAS transport formats), they have neither an API nor aggregated data over time for ease of use.
-# 
-# This project harmonizes the data across years, focussing BMI by state, age, and gender from 1984 to 2011 allowing future analyses as well as providing a resource for decision makers. 
 
 #libraries 
 library(plyr)
@@ -74,17 +69,6 @@ all.c <- ddply(all, .(state, yr, sex, age.cat), summarise, mean.bmi=round(mean(b
 
 
 
-##############################################################################
-# Extra stuff
-all.d <- ddply(all, .(state, yr, sex), summarise, mean.bmi=round(mean(bmi),1))
-all.d <- merge(state.codes, all.d, by="state")
-
-write.csv(all, file="./wtdata_clean.csv", row.names=FALSE)
-write.csv(all.c, file="./wtdata_clean_avg.csv", row.names=FALSE)
-write.csv(all.d, file="./wtdata_clean_avg_noage.csv", row.names=FALSE)
-
-all.sample <- all.a[sample(1:nrow(all.a), 5000, replace=F),]
-write.csv(all.sample, file="./wtdata_clean_sample.csv", row.names=FALSE)
 
 
 
